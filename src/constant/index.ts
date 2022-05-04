@@ -8,6 +8,23 @@ export const envMap = { local: 'envMap', stg: 'stg' };
 
 export const AES_KEY = 'AES_KEY';
 
-export const apiCommonBase = 'apiCommonBase';
+export const SERVICE_URL = 'apiCommonBase';
 
 export const operateMap: any = 'operateMap';
+
+export const AUTHORIZATION = 'Authorization';
+
+// 认证类型
+export const AUTH_TYPE = {
+  BEARER: 'bearer',
+  BASIC: 'basic',
+};
+
+// http method
+export const METHOD = {
+  GET: 'get',
+  POST: 'post',
+  DELETE: 'delete',
+  PUT: 'put',
+  PATCH: 'patch',
+};

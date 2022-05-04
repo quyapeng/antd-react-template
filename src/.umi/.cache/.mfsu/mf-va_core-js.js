@@ -1,0 +1,3 @@
+import _ from '/Users/Mi/study/antd-react-template/node_modules/core-js';
+export default _;
+export * from '/Users/Mi/study/antd-react-template/node_modules/core-js';

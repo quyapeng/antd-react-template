@@ -1,7 +1,7 @@
-const baseUrl = 'www';
+const baseUrl = 'api.qlion.com/';
 
 export const ApiUrlMap = {
-  stg: `https://test-${baseUrl}`,
+  stg: `https://dev-${baseUrl}`,
   pre: '',
   prd: `https://pro-${baseUrl}`,
 };

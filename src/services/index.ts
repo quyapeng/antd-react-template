@@ -1,13 +1,3 @@
-import AxiosClient, { RequestConfig } from '@/utils/AxiosClient';
-import withClientAuth from '@/utils/withClientAuth';
-import ClientHeaderAuth from '@/utils/ClientHeaderAuth';
-import { history } from 'umi';
-
-const headerAuth = new ClientHeaderAuth(
-  process.env.authHeader as string,
-  'Bearer',
-);
-
 export function authorize(token: string) {
   console.log('authorize');
 }

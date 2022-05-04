@@ -1,7 +1,7 @@
 import moment, { Moment } from 'moment';
 import { Decimal } from 'decimal.js';
 import { SpaceProps } from 'antd/es/space';
-import { apiCommonBase } from '@/constant';
+import { SERVICE_URL } from '@/constant';
 
 export * from './message';
 
@@ -78,7 +78,7 @@ export const getSpaceProps = (
 };
 
 export const getApiSuffixByServiceName = (serviceName: string): string => {
-  return serviceName === 'loginService' ? '' : apiCommonBase;
+  return serviceName === 'loginService' ? '' : SERVICE_URL;
 };
 
 export const disabledDate = (current: Moment) =>
