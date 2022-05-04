@@ -1,0 +1,72 @@
+@import '~@/assets/common.less';
+
+.wrap {
+  position: relative;
+  height: 100vh;
+  background: linear-gradient(253.56deg, rgba(229, 236, 255, 1) 0%, rgba(242, 246, 255, 1) 100%);
+  box-shadow: 0 24px 24px -8px rgba(167, 178, 204, 0.25);
+  overflow: auto;
+}
+
+.loginBg {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+  z-index: 0;
+  img {
+    width: 100%;
+  }
+}
+
+.main {
+  position: absolute;
+  z-index: 1;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 1440px;
+  display: flex;
+  .flex(flex, center, space-around);
+}
+
+.loginWrap {
+  width: 480px;
+  height: 460px;
+  border-radius: 8px;
+  background-color: @white;
+  padding: 50px;
+  h1 {
+    .font-large(24px);
+    text-align: center;
+  }
+  :global {
+    .ant-input-affix-wrapper {
+      padding: 12px 14px;
+    }
+    .ant-btn-lg {
+      height: 48px;
+      padding: 8px 15px;
+      .borderRadios;
+    }
+  }
+}
+
+.remember {
+  .flex(flex, center, space-between);
+}
+
+.toolTip {
+  :global {
+    .ant-tooltip {
+      &-content {
+        box-shadow: 0 2px 12px 0 rgba(192, 195, 204, 0.15);
+      }
+      &-inner {
+        border-radius: 2px;
+        color: rgba(0, 0, 0, 0.85);
+        padding: 12px 17px;
+      }
+    }
+  }
+}

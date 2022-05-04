@@ -1,0 +1,29 @@
+.font-small() {
+  font-size: 12px;
+}
+.font-normal() {
+  font-size: 14px;
+}
+.font-large(@large: 16px) {
+  font-size: @large;
+}
+
+.flex( @flex: flex, @align: center, @justify: center,) {
+  display: @flex;
+  align-items: @align;
+  justify-content: @justify;
+}
+
+.textAlign(@align: center) {
+  text-align: @align;
+}
+
+.borderRadios(@radios: 4px) {
+  border-radius: @radios;
+}
+
+.textEllipsis() {
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}

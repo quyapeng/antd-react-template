@@ -1,0 +1,34 @@
+// 主题样式 -- 默认样式见 node_modules/antd/lib/style/themes/default.less
+// less-vars-to-js 待验证
+@primary-color: #3370ff; // 全局主色
+@lf-main-text: #232426;
+@white: #fff;
+@heading-color: @lf-main-text; // 标题色
+@text-color: @lf-main-text; // 主文本色
+@text-color-secondary: #84868c; // 次文本色
+@disabled-color: rgba(0, 0, 0, 0.25); // 失效色
+@border-color-base: #d9d9d9; // 边框色
+@box-shadow-base: 0 3px 6px -4px rgba(0, 0, 0, 0.12), 0 6px 16px 0 rgba(0, 0, 0, 0.08),
+  0 9px 28px 8px rgba(0, 0, 0, 0.05); // 浮层阴影
+@error-color: #f05b5b;
+
+// 常用自定义
+@card-number: #515359;
+@legend: #8c8c8c;
+@aside: #999999;
+@card-box-shadow: 0 2px 20px 0 rgba(167, 178, 204, 0.24);
+@btn-border: #d3d7e0;
+@main-bg: #fff7ea;
+@second-bg: #f0f7ff;
+@text-color-third: #b5b9bf;
+@highlight-bg: #f7f9fa;
+
+:export {
+  main: @primary-color;
+  second: @text-color-secondary;
+  third: @text-color-third;
+  highlightBg: @highlight-bg;
+  borderColor: @btn-border;
+  dangerColor: @error-color;
+  numberColor: @card-number;
+}
