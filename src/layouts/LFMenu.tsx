@@ -1,13 +1,6 @@
 import React from 'react';
 import { Menu } from 'antd';
-import {
-  HomeOutlined,
-  TeamOutlined,
-  FileTextOutlined,
-  ApiOutlined,
-  MobileOutlined,
-  WalletOutlined,
-} from '@ant-design/icons';
+import { HomeOutlined } from '@ant-design/icons';
 import { useLocation } from 'react-router-dom';
 import styles from './index.less';
 
@@ -30,45 +23,6 @@ const menuList: MenuData[] = [
     path: '/home',
     icon: <HomeOutlined />,
   },
-  {
-    label: 'SIM卡',
-    path: '/sim',
-    icon: <WalletOutlined />,
-  },
-  {
-    label: '账号清单',
-    path: '/account',
-    icon: <TeamOutlined />,
-  },
-  {
-    label: '行为日志',
-    path: '/behavior',
-    icon: <FileTextOutlined />,
-  },
-  {
-    label: '代理配置',
-    path: '/proxy',
-    icon: <ApiOutlined />,
-  },
-  {
-    label: '设备管理',
-    path: '/deviceManager',
-    icon: <MobileOutlined />,
-    children: [
-      {
-        label: '手机设备管理',
-        path: '/device',
-      },
-      {
-        label: 'APP管理',
-        path: '/app',
-      },
-      {
-        label: 'WEB机器管理',
-        path: '/webServer',
-      },
-    ],
-  },
 ];
 
 const getDefaultOpenKeys = (pathname: string): string[] => {
@@ -88,7 +42,7 @@ function LFMenu(props: iProps) {
   const defaultOpenKeys = getDefaultOpenKeys(pathname);
   return (
     <Menu
-      theme="light"
+      theme="dark"
       defaultSelectedKeys={[pathname]}
       mode="inline"
       defaultOpenKeys={defaultOpenKeys}

@@ -45,7 +45,7 @@ function HeaderMenu() {
       <Dropdown overlay={menu} arrow overlayClassName={styles.dropDown}>
         <Space>
           <Avatar size={32} icon={<UserOutlined />} /> {userName}{' '}
-          <DownOutlined />
+          <DownOutlined style={{ color: '#ffffff' }} />
         </Space>
       </Dropdown>
     </>

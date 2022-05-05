@@ -4,8 +4,9 @@
   margin: 10px 16px;
   text-align: center;
   height: 40px;
-  // background: url('../assets/img/logo_txt.png') center center no-repeat #f7f9fa;
-  background-size: 44px 20px;
+  width: 40px;
+  background-image: url(../assets/img/favicon.ico);
+  background-size: 100% 100%;
 }
 .container {
   margin: 16px 20px;
@@ -21,22 +22,12 @@
     & .ant-menu {
       padding: 0 4px;
     }
-    .ant-menu:not(.ant-menu-horizontal) .ant-menu-item-selected {
-     
-    }
-
-    .ant-menu-item {
-      .borderRadios;
-    }
-
     .ant-menu-sub.ant-menu-inline {
-      background-color: #f7f7f7;
       padding: 4px 0;
     }
   }
 }
 .layout {
-  min-width: 1200px;
   :global {
     & .ant-layout-header {
       height: 56px;
@@ -59,8 +50,6 @@
         padding: 8px 0 8px 16px;
       }
     }
-    .ant-dropdown-menu-item:hover,
-    .ant-dropdown-menu-submenu-title:hover {
-    }
+   
   }
 }

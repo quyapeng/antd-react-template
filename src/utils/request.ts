@@ -1,7 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios';
-import { AUTH_TYPE } from '@/constant';
-
-const xsrfHeaderName = 'authorization';
+import { AUTH_TYPE, xsrfHeaderName } from '@/constant';
 
 // 跨域认证信息 header 名
 
@@ -28,14 +26,18 @@ fetch.interceptors.request.use(
     }
     if (config && config.url === 'login/oauth/token') {
       // basic Y2xpZW50OjEyMzQ1Ng==
-      config.headers['authorization'] = 'basic Y2xpZW50OjEyMzQ1Ng==';
+      config.headers[
+        xsrfHeaderName
+      ] = `${AUTH_TYPE.BASIC} Y2xpZW50OjEyMzQ1Ng==`;
+    } else {
+      if (config && config.headers) {
+        const loginToken = localStorage.getItem(xsrfHeaderName);
+        if (loginToken) {
+          config.headers[xsrfHeaderName] = loginToken;
+        }
+      }
     }
-    // if (config && config.headers) {
-    //   const loginToken = 'token';
-    //   if (loginToken) {
-    //     config.headers['authorization'] = loginToken;
-    //   }
-    // }
+
     return config;
   },
   (error: AxiosError) => {
@@ -46,15 +48,15 @@ fetch.interceptors.request.use(
 // 响应拦截
 fetch.interceptors.response.use(
   (response: AxiosResponse) => {
-    console.log('response', response);
-    // const {code} = response
-    // switch (code) {
-    //     case 0://正常数据
-    //         return response
-    //     case 10104://登录超时
-    //         window.location.href = `${window.location.origin}`
-    //         return Promise.reject(res.message)
-    // }
+    console.log('interceptors', response);
+    const { status } = response;
+    switch (status) {
+      case 200: //正常数据
+        return response;
+      case 400: //登录超时
+        window.location.href = `${window.location.origin}`;
+        return Promise.reject(response);
+    }
     // message.error(response.data.message)
     // return Promise.reject(new Error(response.data.message))
   },

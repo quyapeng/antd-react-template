@@ -13,7 +13,6 @@ function LoginForm() {
   const onFinish = (value: LoginParams) => {
     value.grant_type = 'password';
     value.scope = 'client';
-    console.log(value);
     loginController.run(value);
   };
 

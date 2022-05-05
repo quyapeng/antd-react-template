@@ -25,7 +25,6 @@ export const getControllerErrMsg = (
   code: number,
   msg?: string,
 ) => {
-  console.log('type', type);
   switch (type) {
     case ErrMap.list:
       return `获取${column}列表失败 -- ${code}`;

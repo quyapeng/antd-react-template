@@ -48,7 +48,7 @@ export default function MainLayout({
               collapsible
               collapsed={collapsed}
               onCollapse={onCollapse}
-              theme="light"
+              theme="dark"
               className={styles.slider}
             >
               <div className={styles.logoWrap} />

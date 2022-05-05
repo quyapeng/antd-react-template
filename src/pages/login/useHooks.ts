@@ -3,24 +3,24 @@ import { login, LoginParams } from '@/services/loginService';
 import { message } from 'antd';
 import { history } from 'umi';
 import { ErrMap, getControllerErrMsg } from '@/utils/message';
+import { xsrfHeaderName } from '@/constant';
 
 const useLogin = () => {
   const loginController = useRequest(
     async (params: LoginParams) => {
-      console.log('params', params);
       // login(params);
       try {
-        const { data } = await login(params);
+        const {
+          data: { access_token, token_type },
+        } = await login(params);
         message.success('登录成功');
-        console.log('ddd------', data);
-        // localStorage.setItem('username', user_info.username);
-        // localStorage.setItem('token', token);
-        // history.replace('/home');
-      } catch (err: any) {
-        console.log(err);
-        const { status, msg } = err.response;
-
-        message.error(getControllerErrMsg(ErrMap.login, '登录', status, msg));
+        localStorage.setItem(xsrfHeaderName, `${token_type} ${access_token}`);
+        history.replace('/home');
+      } catch (error: any) {
+        console.log(error);
+        const { code, msg } = error.response.data;
+        console.log(error.response);
+        message.error(getControllerErrMsg(ErrMap.login, '登录', code, msg));
       }
     },
     {

@@ -36,3 +36,5 @@ export const operateMap: stringObject = {
   modify: '编辑',
   delete: '删除',
 };
+
+export const xsrfHeaderName = 'authorization';

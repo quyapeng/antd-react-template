@@ -1,7 +1,7 @@
 import moment, { Moment } from 'moment';
 import { Decimal } from 'decimal.js';
 import { SpaceProps } from 'antd/es/space';
-import { SERVICE_URL } from '@/constant';
+import { SERVICE_URL, xsrfHeaderName } from '@/constant';
 
 export * from './message';
 
@@ -54,8 +54,8 @@ export const downloadFile = (url: string) => {
 };
 
 export const getTokenDecode = () => {
-  const token = localStorage.getItem('token');
-  if (token) return 'token';
+  const token = localStorage.getItem(xsrfHeaderName);
+  if (token) return token;
   return null;
 };
 
