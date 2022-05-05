@@ -1,14 +1,67 @@
-import axios from 'axios';
-import { AUTHORIZATION, AUTH_TYPE, METHOD } from '@/constant';
+import axios, { AxiosRequestConfig, AxiosError, AxiosResponse } from 'axios';
+import { AUTH_TYPE } from '@/constant';
+
+const xsrfHeaderName = 'authorization';
 
 // 跨域认证信息 header 名
 
-const fetch = axios.create({
+const fetch: any = axios.create({
   baseURL: process.env.apiUrl,
-  xsrfHeaderName: AUTHORIZATION,
+  xsrfHeaderName,
   timeout: 5000,
   withCredentials: true,
+  headers: {
+    'content-type': 'application/x-www-form-urlencoded',
+  },
 });
+
+// 请求拦截
+fetch.interceptors.request.use(
+  (config: any) => {
+    console.log('config', config);
+    if (config.params) {
+      for (const item in config.params) {
+        if (item === null) {
+          delete config.params[item];
+        }
+      }
+    }
+    if (config && config.url === 'login/oauth/token') {
+      // basic Y2xpZW50OjEyMzQ1Ng==
+      config.headers['authorization'] = 'basic Y2xpZW50OjEyMzQ1Ng==';
+    }
+    // if (config && config.headers) {
+    //   const loginToken = 'token';
+    //   if (loginToken) {
+    //     config.headers['authorization'] = loginToken;
+    //   }
+    // }
+    return config;
+  },
+  (error: AxiosError) => {
+    return Promise.reject(error);
+  },
+);
+
+// 响应拦截
+fetch.interceptors.response.use(
+  (response: AxiosResponse) => {
+    console.log('response', response);
+    // const {code} = response
+    // switch (code) {
+    //     case 0://正常数据
+    //         return response
+    //     case 10104://登录超时
+    //         window.location.href = `${window.location.origin}`
+    //         return Promise.reject(res.message)
+    // }
+    // message.error(response.data.message)
+    // return Promise.reject(new Error(response.data.message))
+  },
+  (error: AxiosError) => {
+    return Promise.reject(error);
+  },
+);
 
 /**
  * axios请求
@@ -17,22 +70,22 @@ const fetch = axios.create({
  * @param params 请求参数
  * @returns {Promise<AxiosResponse<T>>}
  */
-async function request(url: string, method: any, params: any, config: any) {
-  switch (method) {
-    case METHOD.GET:
-      return fetch.get(url, { params, ...config });
-    case METHOD.POST:
-      return fetch.post(url, params, config);
-    case METHOD.PUT:
-      return fetch.put(url, params, config);
-    case METHOD.DELETE:
-      return fetch.delete(url, params);
-    case METHOD.PATCH:
-      return fetch.patch(url, params, config);
-    default:
-      return fetch.get(url, { params, ...config });
-  }
-}
+// async function request(url: string, method: any, params: any, config: any) {
+// switch (method) {
+//   case METHOD.GET:
+//     return fetch.get(url, { params, ...config });
+//   case METHOD.POST:
+//     return fetch.post(url, params, config);
+//   case METHOD.PUT:
+//     return fetch.put(url, params, config);
+//   case METHOD.DELETE:
+//     return fetch.delete(url, params);
+//   case METHOD.PATCH:
+//     return fetch.patch(url, params, config);
+//   default:
+//     return fetch.get(url, { params, ...config });
+// }
+// }
 
 /**
  * 设置认证信息
@@ -42,10 +95,10 @@ async function request(url: string, method: any, params: any, config: any) {
 function setAuthorization(auth: any, authType = AUTH_TYPE.BEARER) {
   switch (authType) {
     case AUTH_TYPE.BEARER:
-      localStorage.setItem(AUTHORIZATION, `${authType} ` + auth.token);
+      localStorage.setItem(xsrfHeaderName, `${authType} ` + auth.token);
       break;
     case AUTH_TYPE.BASIC:
-      localStorage.setItem(AUTHORIZATION, `${authType} ${auth.token}`);
+      localStorage.setItem(xsrfHeaderName, `${authType} ${auth.token}`);
       break;
     default:
       break;
@@ -59,10 +112,10 @@ function setAuthorization(auth: any, authType = AUTH_TYPE.BEARER) {
 function removeAuthorization(authType = AUTH_TYPE.BEARER) {
   switch (authType) {
     case AUTH_TYPE.BEARER:
-      localStorage.removeItem(AUTHORIZATION);
+      localStorage.removeItem(xsrfHeaderName);
       break;
     case AUTH_TYPE.BASIC:
-      localStorage.removeItem(AUTHORIZATION);
+      localStorage.removeItem(xsrfHeaderName);
       break;
     default:
       break;
@@ -77,12 +130,12 @@ function removeAuthorization(authType = AUTH_TYPE.BEARER) {
 function checkAuthorization(authType = AUTH_TYPE.BEARER) {
   switch (authType) {
     case AUTH_TYPE.BEARER:
-      if (localStorage.getItem(AUTHORIZATION)) {
+      if (localStorage.getItem(xsrfHeaderName)) {
         return true;
       }
       break;
     case AUTH_TYPE.BASIC:
-      if (localStorage.getItem(AUTHORIZATION)) {
+      if (localStorage.getItem(xsrfHeaderName)) {
         return true;
       }
       break;
@@ -91,49 +144,10 @@ function checkAuthorization(authType = AUTH_TYPE.BEARER) {
   }
 }
 
-/**
- * 加载 axios 拦截器
- * @param interceptors
- * @param options
- */
-function loadInterceptors(interceptors: any, options: any) {
-  const { request, response } = interceptors;
-  // 加载请求拦截器
-  request.forEach((item: any) => {
-    let { onFulfilled, onRejected } = item;
-    if (!onFulfilled || typeof onFulfilled !== 'function') {
-      onFulfilled = (config: any) => config;
-    }
-    if (!onRejected || typeof onRejected !== 'function') {
-      onRejected = (error: any) => Promise.reject(error);
-    }
-    fetch.interceptors.request.use(
-      (config) => onFulfilled(config, options),
-      (error) => onRejected(error, options),
-    );
-  });
-  // 加载响应拦截器
-  response.forEach((item: any) => {
-    let { onFulfilled, onRejected } = item;
-    if (!onFulfilled || typeof onFulfilled !== 'function') {
-      onFulfilled = (response: any) => response;
-    }
-    if (!onRejected || typeof onRejected !== 'function') {
-      onRejected = (error: any) => Promise.reject(error);
-    }
-    fetch.interceptors.response.use(
-      (response) => onFulfilled(response, options),
-      (error) => onRejected(error, options),
-    );
-  });
-}
-
 export {
-  METHOD,
   AUTH_TYPE,
-  request,
+  fetch,
   setAuthorization,
   removeAuthorization,
   checkAuthorization,
-  loadInterceptors,
 };

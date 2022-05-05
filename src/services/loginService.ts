@@ -1,4 +1,5 @@
-import { METHOD, request } from '@/utils/request';
+import { fetch } from '@/utils/request';
+import qs from 'qs';
 
 export interface LoginParams {
   grant_type: string;
@@ -15,11 +16,10 @@ interface UserInfo {
 
 interface LoginResponse {
   token: string;
-  user_info: UserInfo;
 }
 
 interface RequestConfig {}
-export function login(params: LoginParams, config?: RequestConfig) {
+export function login(params: LoginParams) {
   // return axios.post<LoginResponse>(`login/oauth/token`, params, config);
-  return request(`login/oauth/token`, METHOD.POST, params, config);
+  return fetch.post(`login/oauth/token`, `${qs.stringify(params)}`);
 }

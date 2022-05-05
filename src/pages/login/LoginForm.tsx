@@ -2,8 +2,7 @@ import React, { memo, useEffect } from 'react';
 import { Form, Input, Button } from 'antd';
 import { LoginParams } from '@/services/loginService';
 import { history } from 'umi';
-import Cookies from 'js-cookie';
-import { decryptByAes } from '@/utils/crypto';
+// import Cookies from 'js-cookie';
 import styles from './index.less';
 import useLogin from './useHooks';
 
@@ -12,6 +11,9 @@ function LoginForm() {
   const { loginController } = useLogin();
 
   const onFinish = (value: LoginParams) => {
+    value.grant_type = 'password';
+    value.scope = 'client';
+    console.log(value);
     loginController.run(value);
   };
 
@@ -22,15 +24,6 @@ function LoginForm() {
       window.history.replaceState({}, '', '#/login');
       window.location.reload();
       return;
-    }
-    const [userName, userPwd] = ['userName', 'userPwd'].map((item) =>
-      Cookies.get(item),
-    );
-    if (userName && userPwd) {
-      form.setFieldsValue({
-        userName,
-        password: decryptByAes(userPwd),
-      });
     }
   }, [form]);
 

@@ -7,19 +7,20 @@ import { ErrMap, getControllerErrMsg } from '@/utils/message';
 const useLogin = () => {
   const loginController = useRequest(
     async (params: LoginParams) => {
+      console.log('params', params);
+      // login(params);
       try {
-        const {
-          data: { token, user_info },
-        } = await login(params);
+        const { data } = await login(params);
         message.success('登录成功');
-        localStorage.setItem('username', user_info.username);
-        localStorage.setItem('token', token);
-        history.replace('/home');
+        console.log('ddd------', data);
+        // localStorage.setItem('username', user_info.username);
+        // localStorage.setItem('token', token);
+        // history.replace('/home');
       } catch (err: any) {
-        const { status, data } = err.response;
-        message.error(
-          getControllerErrMsg(ErrMap.login, '登录', status, data?.detail),
-        );
+        console.log(err);
+        const { status, msg } = err.response;
+
+        message.error(getControllerErrMsg(ErrMap.login, '登录', status, msg));
       }
     },
     {

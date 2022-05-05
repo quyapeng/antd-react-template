@@ -10,8 +10,6 @@ export const AES_KEY = 'AES_KEY';
 
 export const SERVICE_URL = 'apiCommonBase';
 
-export const operateMap: any = 'operateMap';
-
 export const AUTHORIZATION = 'Authorization';
 
 // 认证类型
@@ -27,4 +25,14 @@ export const METHOD = {
   DELETE: 'delete',
   PUT: 'put',
   PATCH: 'patch',
+};
+
+export type stringObject = {
+  [x: string]: string;
+};
+export const operateMap: stringObject = {
+  operate: '操作',
+  create: '新增',
+  modify: '编辑',
+  delete: '删除',
 };

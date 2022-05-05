@@ -19,7 +19,13 @@ export const operateFailed = (type: string, callback?: NoopFunction) => {
   callback?.();
 };
 
-export const getControllerErrMsg = (type: ErrMap, column: string, code: number, msg?: string) => {
+export const getControllerErrMsg = (
+  type: ErrMap,
+  column: string,
+  code: number,
+  msg?: string,
+) => {
+  console.log('type', type);
   switch (type) {
     case ErrMap.list:
       return `获取${column}列表失败 -- ${code}`;
@@ -28,6 +34,6 @@ export const getControllerErrMsg = (type: ErrMap, column: string, code: number, 
     case ErrMap.update:
       return `编辑${column}失败 -- ${code}`;
     default:
-      return msg || `${column}失败 -- ${code}`;
+      return msg || `${column}失败 -- ${code}${msg}`;
   }
 };
