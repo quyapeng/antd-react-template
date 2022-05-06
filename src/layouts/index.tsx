@@ -8,6 +8,7 @@ import zhCN from 'antd/es/locale/zh_CN';
 import styles from './index.less';
 import LFMenu from './LFMenu';
 import HeaderMenu from './HeaderMenu';
+import BreadCrumb from './Breadcrumb';
 
 const { Header, Content, Sider: Slider } = Layout;
 
@@ -61,6 +62,7 @@ export default function MainLayout({
                   <HeaderMenu />
                 </Space>
               </Header>
+              <BreadCrumb></BreadCrumb>
               <Content className={styles.container}>{children}</Content>
             </Layout>
           </Layout>

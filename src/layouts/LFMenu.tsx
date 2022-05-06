@@ -19,9 +19,15 @@ const { SubMenu } = Menu;
 
 const menuList: MenuData[] = [
   {
-    label: '首页',
-    path: '/home',
+    label: '系统管理',
+    path: '/set',
     icon: <HomeOutlined />,
+    children: [
+      {
+        label: '菜单管理',
+        path: '/home',
+      },
+    ],
   },
 ];
 
