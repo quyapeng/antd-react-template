@@ -62,7 +62,7 @@ export default function MainLayout({
                   <HeaderMenu />
                 </Space>
               </Header>
-              <BreadCrumb></BreadCrumb>
+              {/* <BreadCrumb></BreadCrumb> */}
               <Content className={styles.container}>{children}</Content>
             </Layout>
           </Layout>
